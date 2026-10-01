@@ -32,6 +32,30 @@ jobs:
           git push -f origin HEAD
           gh pr create --fill --base main
           gh pr merge --rebase --delete-branch
+  bump-github:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: scip, repo: scip-code/scip }
+          - { name: scip-java, repo: scip-code/scip-java }
+          - { name: cc-sessions, repo: chronologos/cc-sessions }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump formula
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ver=$(.github/bump.sh ${{ matrix.name }} ${{ matrix.repo }})
+          [ -n "$ver" ] || exit 0
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git checkout -b bump/${{ matrix.name }}-$ver
+          git commit -am "feat: ${{ matrix.name }} $ver"
+          git push -f origin HEAD
+          gh pr create --fill --base main
+          gh pr merge --rebase --delete-branch
   junie:
     runs-on: ubuntu-latest
     steps:
