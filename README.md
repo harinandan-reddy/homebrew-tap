@@ -25,3 +25,23 @@ Casks for the [Junie CLI](https://www.jetbrains.com/junie), JetBrains' coding ag
 The `junie` command is a small wrapper that turns off Junie's built-in self-update, so Homebrew handles upgrades. Casks are used instead of formulas because Homebrew would break the code signature on Junie's macOS app bundle, and macOS would then refuse to run it. A script in `.github/gen.sh` regenerates the casks from the JetBrains GitHub releases, and a scheduled workflow commits any changes.
 
 Uninstalling normally keeps your settings and logs in `~/.junie`. Uninstall with `--zap` to delete that directory too.
+
+## SCIP tools
+
+Formulas for the [SCIP](https://github.com/scip-code/scip) code intelligence protocol.
+
+    brew install harinandan-reddy/tap/scip       # SCIP CLI
+    brew install harinandan-reddy/tap/scip-java  # indexer for Java, Scala and Kotlin
+
+- `scip` is the SCIP command line tool. It installs the prebuilt release binary for macOS and Linux, on Intel and ARM.
+- `scip-java` is the [SCIP indexer for Java, Scala and Kotlin](https://github.com/scip-code/scip-java). It installs the release launcher and depends on Homebrew's `openjdk`, which it uses to run.
+
+These formulas are not bumped automatically yet. Update the version and checksums by hand for new releases.
+
+## cc-sessions
+
+A formula for [cc-sessions](https://github.com/chronologos/cc-sessions), a fast command line tool that lists and resumes Claude Code sessions across all projects. It installs the prebuilt release binary for macOS and Linux. Upstream ships only an ARM build for macOS, so Intel Macs run it under Rosetta.
+
+    brew install harinandan-reddy/tap/cc-sessions
+
+This formula is not bumped automatically yet.
