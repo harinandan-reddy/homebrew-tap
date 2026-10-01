@@ -36,7 +36,7 @@ Formulas for the [SCIP](https://github.com/scip-code/scip) code intelligence pro
 - `scip` is the SCIP command line tool. It installs the prebuilt release binary for macOS and Linux, on Intel and ARM.
 - `scip-java` is the [SCIP indexer for Java, Scala and Kotlin](https://github.com/scip-code/scip-java). It installs the release launcher and depends on Homebrew's `openjdk`, which it uses to run.
 
-These formulas are not bumped automatically yet. Update the version and checksums by hand for new releases.
+The same GitHub Actions workflow checks for new releases of both and bumps the formula version and checksums automatically.
 
 ## cc-sessions
 
@@ -44,4 +44,4 @@ A formula for [cc-sessions](https://github.com/chronologos/cc-sessions), a fast 
 
     brew install harinandan-reddy/tap/cc-sessions
 
-This formula is not bumped automatically yet.
+The same GitHub Actions workflow checks for new releases and bumps the formula version and checksums automatically.
