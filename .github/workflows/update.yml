@@ -1,0 +1,30 @@
+name: update
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump formula
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          repo=SigNoz/signoz-mcp-server
+          f=Formula/signoz-mcp-server.rb
+          tag=$(gh release view --repo $repo --json tagName --jq .tagName)
+          ver=${tag#v}
+          grep -q "version \"$ver\"" $f && exit 0
+          sums=$(gh release download "$tag" --repo $repo -p '*checksums.txt' -O -)
+          sed -i "s/version \".*\"/version \"$ver\"/" $f
+          while read -r sum name; do
+            sed -i "/$name/{n;s/sha256 \".*\"/sha256 \"$sum\"/}" $f
+          done <<< "$sums"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "feat: signoz-mcp-server $ver"
+          git push
