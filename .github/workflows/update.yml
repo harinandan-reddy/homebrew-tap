@@ -28,3 +28,20 @@ jobs:
           git config user.email github-actions@github.com
           git commit -am "feat: signoz-mcp-server $ver"
           git push
+  junie:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regenerate junie casks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          .github/gen.sh
+          git diff --quiet && exit 0
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          for f in $(git diff --name-only); do
+            ver=$(grep -m1 '^  version' $f | cut -d'"' -f2)
+            git commit -m "feat: $(basename $f .rb) $ver" $f
+          done
+          git push
