@@ -45,3 +45,11 @@ A formula for [cc-sessions](https://github.com/chronologos/cc-sessions), a fast 
     brew install harinandan-reddy/tap/cc-sessions
 
 The same GitHub Actions workflow checks for new releases and bumps the formula version and checksums automatically.
+
+## codegraph
+
+A formula for [codegraph](https://github.com/colbymchenry/codegraph), a local code knowledge graph that AI coding agents query instead of searching files. It installs the prebuilt release bundle, which includes its own Node runtime, for macOS and Linux on ARM and Intel.
+
+    brew install harinandan-reddy/tap/codegraph
+
+The same GitHub Actions workflow checks for new releases and bumps the formula version and checksums automatically.
