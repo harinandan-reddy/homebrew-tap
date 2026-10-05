@@ -53,3 +53,11 @@ A formula for [codegraph](https://github.com/colbymchenry/codegraph), a local co
     brew install harinandan-reddy/tap/codegraph
 
 The same GitHub Actions workflow checks for new releases and bumps the formula version and checksums automatically.
+
+## abtop
+
+A formula for [abtop](https://github.com/graykode/abtop), a terminal monitor like htop for AI coding agents. It shows Claude Code and Codex CLI sessions, token use, context window, rate limits, and open ports. It installs the prebuilt release binary for macOS and Linux on ARM and Intel.
+
+    brew install harinandan-reddy/tap/abtop
+
+The same GitHub Actions workflow checks for new releases and bumps the formula version and checksums automatically.
