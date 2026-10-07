@@ -1,9 +1,9 @@
 cask "junie@nightly" do
   arch arm: "aarch64", intel: "amd64"
 
-  version "3688.1"
-  sha256 arm:   "f0515776444b656c368eba34cc7f7f4655ff3432fe85dfae5928f34536bccd85",
-         intel: "f5aaf769d708f0eda05d8c2262df61e0348c7214813e224ec7c999bfb89121d2"
+  version "3700.1"
+  sha256 arm:   "19c67a31025d35d2e2b7348bc3164636f6428598411ba550589c166e9547071c",
+         intel: "4978d9bdcd3d27ff92aaca23a53a1b80a195bf210e2e208feb2b1215bac66ba2"
 
   url "https://github.com/JetBrains/junie/releases/download/#{version}/junie-nightly-#{version}-macos-#{arch}.zip"
   name "Junie CLI (nightly)"
