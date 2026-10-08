@@ -43,6 +43,7 @@ jobs:
           - { name: cc-sessions, repo: chronologos/cc-sessions }
           - { name: codegraph, repo: colbymchenry/codegraph }
           - { name: abtop, repo: graykode/abtop }
+          - { name: launchyard, repo: jayhickey/Launchyard }
     steps:
       - uses: actions/checkout@v4
       - name: Bump formula
