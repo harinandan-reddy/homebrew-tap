@@ -68,4 +68,4 @@ A cask for [Launchyard](https://github.com/jayhickey/Launchyard), a native macOS
 
     brew install --cask harinandan-reddy/tap/launchyard
 
-This cask is not bumped automatically. The release publishes no checksum file, so `.github/bump.sh` cannot read one.
+The same GitHub Actions workflow bumps the cask version and checksum automatically. The checksum comes from the digest GitHub shows for the release asset.
