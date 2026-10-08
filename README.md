@@ -61,3 +61,11 @@ A formula for [abtop](https://github.com/graykode/abtop), a terminal monitor lik
     brew install harinandan-reddy/tap/abtop
 
 The same GitHub Actions workflow checks for new releases and bumps the formula version and checksums automatically.
+
+## Launchyard
+
+A cask for [Launchyard](https://github.com/jayhickey/Launchyard), a native macOS app for managing launchd services. It needs macOS 14 or newer. The app is not notarized, so the cask prints the command to clear the quarantine flag if macOS blocks it.
+
+    brew install --cask harinandan-reddy/tap/launchyard
+
+This cask is not bumped automatically. The release publishes no checksum file, so `.github/bump.sh` cannot read one.
