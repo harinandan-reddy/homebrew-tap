@@ -44,6 +44,7 @@ jobs:
           - { name: codegraph, repo: colbymchenry/codegraph }
           - { name: abtop, repo: graykode/abtop }
           - { name: launchyard, repo: jayhickey/Launchyard }
+          - { name: multica-desktop, repo: multica-ai/multica }
     steps:
       - uses: actions/checkout@v4
       - name: Bump formula
