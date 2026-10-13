@@ -33,9 +33,12 @@ jobs:
           gh pr create --fill --base main
           gh pr merge --rebase --delete-branch
   bump-github:
+    needs: bump
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      max-parallel: 1 # jobs merge into main one at a time
       matrix:
         include:
           - { name: scip, repo: scip-code/scip }
@@ -61,6 +64,8 @@ jobs:
           gh pr create --fill --base main
           gh pr merge --rebase --delete-branch
   junie:
+    needs: bump-github
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
