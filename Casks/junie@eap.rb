@@ -1,9 +1,9 @@
 cask "junie@eap" do
   arch arm: "aarch64", intel: "amd64"
 
-  version "3659.3"
-  sha256 arm:   "659eb470e90c1c627017e4b0d41edde61a3878f4c31a8667f91d2fc4ecfa1316",
-         intel: "ac783f5382f3fb52e17199e3ff08354111589e10defdc9c2fe4b46ec7158f604"
+  version "3813.2"
+  sha256 arm:   "59fd2d5d6a02635993ed01dc12fed056d483b082f6878f39c9a3f2df1e6fa727",
+         intel: "bc072b06bfc24288629d4778e93ff4d171b25701d37ef3be0fe2d3059ed1b2a4"
 
   url "https://github.com/JetBrains/junie/releases/download/#{version}/junie-eap-#{version}-macos-#{arch}.zip"
   name "Junie CLI (eap)"
