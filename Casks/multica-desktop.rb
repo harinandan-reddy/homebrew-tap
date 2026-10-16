@@ -1,9 +1,9 @@
 cask "multica-desktop" do
   arch arm: "arm64", intel: "x64"
 
-  version "0.6.2"
-  sha256 arm:   "0ce62042b6ba77525f78739b5370368acdd0a1f6928bf8acc37a1579e73f424c",
-         intel: "5d662a7a77eca4d98fa9c0987981bc13338a87a9f4d945aaf31b4f3371c143a6"
+  version "0.6.3"
+  sha256 arm:   "aabcb9ab2613a002c7013f58ac0ed5007bc48580f5ef242be996388dbbaaac7a",
+         intel: "eba18a64ed1eb1ab5ff62a1b785bfe994621ed05eb683a11173dd72a34fbe95f"
 
   url "https://github.com/multica-ai/multica/releases/download/v#{version}/multica-desktop-#{version}-mac-#{arch}.zip"
   name "Multica"
