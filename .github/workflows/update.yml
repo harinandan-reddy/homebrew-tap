@@ -48,6 +48,7 @@ jobs:
           - { name: abtop, repo: graykode/abtop }
           - { name: launchyard, repo: jayhickey/Launchyard }
           - { name: multica-desktop, repo: multica-ai/multica }
+          - { name: colibri, repo: JustVugg/colibri }
     steps:
       - uses: actions/checkout@v4
       - name: Bump formula
