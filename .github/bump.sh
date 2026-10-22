@@ -29,7 +29,7 @@ old=$(grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' "$f" | head -1)
 old=${old#v}
 [ "$old" = "$ver" ] && exit 0
 tmp=$(mktemp -d)
-gh release download "$tag" --repo "$repo" -p '*.sha256' -p 'SHA256SUMS' -D "$tmp"
+gh release download "$tag" --repo "$repo" -p '*.sha256' -p 'SHA256SUMS' -p 'SHA256SUMS.txt' -D "$tmp"
 sed -i.bak "s/${old//./\\.}/$ver/g" "$f"
 cat "$tmp"/* | while read -r sum name; do
   [ -n "$name" ] || continue

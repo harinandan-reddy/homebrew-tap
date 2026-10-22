@@ -69,3 +69,11 @@ A cask for [Launchyard](https://github.com/jayhickey/Launchyard), a native macOS
     brew install --cask harinandan-reddy/tap/launchyard
 
 The same GitHub Actions workflow bumps the cask version and checksum automatically. The checksum comes from the digest GitHub shows for the release asset.
+
+## colibri
+
+A formula for [colibri](https://github.com/JustVugg/colibri), a small C engine that runs very large mixture-of-experts language models on your own hardware by streaming the experts from disk. It installs the prebuilt release for macOS on Apple Silicon and Linux on x86_64, and puts the `coli` command on your PATH. It needs Python 3, and on macOS it needs Homebrew's `libomp`. Both are installed for you.
+
+    brew install harinandan-reddy/tap/colibri
+
+The same GitHub Actions workflow checks for new releases and bumps the formula version and checksums automatically.
