@@ -1,6 +1,6 @@
 cask "redpanda-cpp" do
   version "3.5.0-beta.2"
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "616b524ddd1bd6e93a0c1e079b5163517aa7d61e1a6c40db6e3b889716e5ca21"
 
   url "https://github.com/harinandan-reddy/homebrew-tap/releases/download/redpanda-cpp-#{version}/RedPandaIDE-#{version}-macos.zip"
   name "Red Panda C++"
