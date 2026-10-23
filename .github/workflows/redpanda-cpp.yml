@@ -25,6 +25,12 @@ jobs:
           arch: clang_64
           # lrelease depends on QtQml framework (qtdeclarative package)
           archives: qtbase qtdeclarative qtsvg qttools qttranslations
+      # v3.4 calls the Windows-only names on every platform; non-Windows has *Info* stubs returning true
+      - name: Patch non-Windows UTF-8 helper names
+        run: |
+          grep -rlE 'isCompilerUsingUTF8|isDebuggerUsingUTF8' RedPandaIDE \
+            | grep -vE '/settings\.(h|cpp)$' \
+            | xargs sed -i '' -e 's/isCompilerUsingUTF8/isCompilerInfoUsingUTF8/g' -e 's/isDebuggerUsingUTF8/isDebugInfoUsingUTF8/g'
       # build.sh at v3.4 defaults to a universal (x86_64 + arm64) build
       - run: ./packages/macos/build.sh --qt-install-dir "$RUNNER_WORKSPACE/Qt" --qt-version 6.8.1
       - name: Sign and zip
