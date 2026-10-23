@@ -1,11 +1,8 @@
 cask "redpanda-cpp" do
-  arch arm: "arm64", intel: "x86_64"
-
   version "3.5.0-beta.2"
-  sha256 arm:   "0000000000000000000000000000000000000000000000000000000000000000",
-         intel: "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
 
-  url "https://github.com/harinandan-reddy/homebrew-tap/releases/download/redpanda-cpp-#{version}/RedPandaIDE-#{version}-macos-#{arch}.zip"
+  url "https://github.com/harinandan-reddy/homebrew-tap/releases/download/redpanda-cpp-#{version}/RedPandaIDE-#{version}-macos.zip"
   name "Red Panda C++"
   desc "Cross-platform C++ IDE"
   homepage "https://github.com/royqh1979/RedPanda-CPP"
