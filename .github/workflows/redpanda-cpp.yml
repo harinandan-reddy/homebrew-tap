@@ -10,13 +10,7 @@ permissions:
   pull-requests: write
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - { arch: arm64, runner: macos-15 }
-          - { arch: x86_64, runner: macos-15-intel }
-    runs-on: ${{ matrix.runner }}
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,22 +19,23 @@ jobs:
           fetch-depth: 0
       - uses: jurplel/install-qt-action@v4
         with:
-          version: 6.11.0
+          version: 6.8.1
           host: mac
           target: desktop
           arch: clang_64
           # lrelease depends on QtQml framework (qtdeclarative package)
           archives: qtbase qtdeclarative qtsvg qttools qttranslations
-      - run: ./packages/macos/build.sh --qt-dir "$RUNNER_WORKSPACE/Qt/6.11.0/macos"
-      - name: Zip
+      # build.sh at v3.4 defaults to a universal (x86_64 + arm64) build
+      - run: ./packages/macos/build.sh --qt-install-dir "$RUNNER_WORKSPACE/Qt" --qt-version 6.8.1
+      - name: Sign and zip
         run: |
           ver=${{ inputs.tag }}; ver=${ver#v}
-          # build.sh tars before codesign, so zip the signed bundle ourselves
-          ditto -c -k --keepParent build/macos-pkg/RedPandaIDE.app \
-            "RedPandaIDE-$ver-macos-${{ matrix.arch }}.zip"
+          app=pkg/universal/bin/RedPandaIDE.app
+          codesign --force --deep --sign - "$app"
+          ditto -c -k --keepParent "$app" "RedPandaIDE-$ver-macos.zip"
       - uses: actions/upload-artifact@v4
         with:
-          name: macos-${{ matrix.arch }}
+          name: macos
           path: RedPandaIDE-*.zip
   release:
     needs: build
@@ -49,21 +44,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          pattern: macos-*
-          merge-multiple: true
+          name: macos
       - name: Release and bump cask
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           ver=${{ inputs.tag }}; ver=${ver#v}
-          arm=$(sha256sum RedPandaIDE-$ver-macos-arm64.zip | cut -d' ' -f1)
-          intel=$(sha256sum RedPandaIDE-$ver-macos-x86_64.zip | cut -d' ' -f1)
+          sum=$(sha256sum RedPandaIDE-$ver-macos.zip | cut -d' ' -f1)
           gh release create "redpanda-cpp-$ver" RedPandaIDE-*.zip \
             --title "Red Panda C++ $ver (macOS)" \
             --notes "Unofficial macOS build of https://github.com/royqh1979/RedPanda-CPP/releases/tag/${{ inputs.tag }} (GPL-3.0). Source and build script are upstream's packages/macos/build.sh."
           f=Casks/redpanda-cpp.rb
           sed -i "s/^  version \".*\"/  version \"$ver\"/" $f
-          sed -i -E "s/(arm: +)\"[0-9a-f]+\"/\1\"$arm\"/; s/(intel: +)\"[0-9a-f]+\"/\1\"$intel\"/" $f
+          sed -i "s/^  sha256 \".*\"/  sha256 \"$sum\"/" $f
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout -b bump/redpanda-cpp-$ver
