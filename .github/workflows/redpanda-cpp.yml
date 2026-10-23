@@ -42,6 +42,13 @@ jobs:
           echo "ver=$ver" >> "$GITHUB_OUTPUT"
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           app=build/macos-pkg/RedPandaIDE.app
+          # macdeployqt bundles the frameworks but the binary has no LC_RPATH, so dyld cannot find them
+          install_name_tool -add_rpath @executable_path/../Frameworks "$app/Contents/MacOS/RedPandaIDE"
+          # upstream's Info.plist template ships these keys empty
+          for kv in CFBundleIdentifier=com.royqh.RedPandaIDE CFBundleName=RedPandaIDE \
+                    CFBundleShortVersionString=${ver%%-*} CFBundleVersion=${ver%%-*}; do
+            plutil -replace "${kv%%=*}" -string "${kv#*=}" "$app/Contents/Info.plist"
+          done
           # build.sh tars before codesign, so sign and zip the bundle ourselves
           codesign --force --deep --sign - "$app"
           ditto -c -k --keepParent "$app" "RedPandaIDE-$ver-macos-${{ matrix.arch }}.zip"
@@ -65,6 +72,7 @@ jobs:
           ver=${{ needs.build.outputs.ver }}
           arm=$(sha256sum RedPandaIDE-$ver-macos-arm64.zip | cut -d' ' -f1)
           intel=$(sha256sum RedPandaIDE-$ver-macos-x86_64.zip | cut -d' ' -f1)
+          gh release delete "redpanda-cpp-$ver" --cleanup-tag --yes 2>/dev/null || true # rebuild of same version
           gh release create "redpanda-cpp-$ver" RedPandaIDE-*.zip \
             --title "Red Panda C++ $ver (macOS)" \
             --notes "Unofficial macOS build (GPL-3.0) of https://github.com/royqh1979/RedPanda-CPP/commit/${{ needs.build.outputs.sha }} using upstream's packages/macos/build.sh."
@@ -76,4 +84,4 @@ jobs:
           git checkout -b bump/redpanda-cpp-$ver
           git commit -am "feat: redpanda-cpp $ver"
           git push -f origin HEAD
-          gh pr create --fill --base main
+          gh pr create --fill --base main || true # push -f already updated an open bump PR
