@@ -2,46 +2,52 @@ name: redpanda-cpp
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: Upstream royqh1979/RedPanda-CPP tag
-        default: v3.4
+      ref:
+        description: Upstream royqh1979/RedPanda-CPP branch, tag or commit
+        default: master
 permissions:
   contents: write
   pull-requests: write
 jobs:
   build:
-    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { arch: arm64, runner: macos-14 }
+          - { arch: x86_64, runner: macos-15-intel }
+    runs-on: ${{ matrix.runner }}
+    outputs:
+      ver: ${{ steps.zip.outputs.ver }}
+      sha: ${{ steps.zip.outputs.sha }}
     steps:
       - uses: actions/checkout@v4
         with:
           repository: royqh1979/RedPanda-CPP
-          ref: ${{ inputs.tag }}
+          ref: ${{ inputs.ref }}
           fetch-depth: 0
       - uses: jurplel/install-qt-action@v4
         with:
-          version: 6.8.1
+          version: 6.11.0
           host: mac
           target: desktop
           arch: clang_64
           # lrelease depends on QtQml framework (qtdeclarative package)
           archives: qtbase qtdeclarative qtsvg qttools qttranslations
-      # v3.4 calls the Windows-only names on every platform; non-Windows has *Info* stubs returning true
-      - name: Patch non-Windows UTF-8 helper names
-        run: |
-          grep -rlE 'isCompilerUsingUTF8|isDebuggerUsingUTF8' RedPandaIDE \
-            | grep -vE '/settings\.(h|cpp)$' \
-            | xargs sed -i '' -e 's/isCompilerUsingUTF8/isCompilerInfoUsingUTF8/g' -e 's/isDebuggerUsingUTF8/isDebugInfoUsingUTF8/g'
-      # build.sh at v3.4 defaults to a universal (x86_64 + arm64) build
-      - run: ./packages/macos/build.sh --qt-install-dir "$RUNNER_WORKSPACE/Qt" --qt-version 6.8.1
+      - run: ./packages/macos/build.sh --qt-dir "$RUNNER_WORKSPACE/Qt/6.11.0/macos"
       - name: Sign and zip
+        id: zip
         run: |
-          ver=${{ inputs.tag }}; ver=${ver#v}
-          app=pkg/universal/bin/RedPandaIDE.app
+          ver=$(jq -r '"\(.major).\(.minor).\(.patch)" + (if .preRelease != "" and .preRelease != null then "-\(.preRelease)" else "" end)' version.json)
+          echo "ver=$ver" >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          app=build/macos-pkg/RedPandaIDE.app
+          # build.sh tars before codesign, so sign and zip the bundle ourselves
           codesign --force --deep --sign - "$app"
-          ditto -c -k --keepParent "$app" "RedPandaIDE-$ver-macos.zip"
+          ditto -c -k --keepParent "$app" "RedPandaIDE-$ver-macos-${{ matrix.arch }}.zip"
       - uses: actions/upload-artifact@v4
         with:
-          name: macos
+          name: macos-${{ matrix.arch }}
           path: RedPandaIDE-*.zip
   release:
     needs: build
@@ -50,19 +56,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: macos
+          pattern: macos-*
+          merge-multiple: true
       - name: Release and bump cask
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          ver=${{ inputs.tag }}; ver=${ver#v}
-          sum=$(sha256sum RedPandaIDE-$ver-macos.zip | cut -d' ' -f1)
+          ver=${{ needs.build.outputs.ver }}
+          arm=$(sha256sum RedPandaIDE-$ver-macos-arm64.zip | cut -d' ' -f1)
+          intel=$(sha256sum RedPandaIDE-$ver-macos-x86_64.zip | cut -d' ' -f1)
           gh release create "redpanda-cpp-$ver" RedPandaIDE-*.zip \
             --title "Red Panda C++ $ver (macOS)" \
-            --notes "Unofficial macOS build of https://github.com/royqh1979/RedPanda-CPP/releases/tag/${{ inputs.tag }} (GPL-3.0). Source and build script are upstream's packages/macos/build.sh."
+            --notes "Unofficial macOS build (GPL-3.0) of https://github.com/royqh1979/RedPanda-CPP/commit/${{ needs.build.outputs.sha }} using upstream's packages/macos/build.sh."
           f=Casks/redpanda-cpp.rb
           sed -i "s/^  version \".*\"/  version \"$ver\"/" $f
-          sed -i "s/^  sha256 \".*\"/  sha256 \"$sum\"/" $f
+          sed -i -E "s/(arm: +)\"[0-9a-f]+\"/\1\"$arm\"/; s/(intel: +)\"[0-9a-f]+\"/\1\"$intel\"/" $f
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout -b bump/redpanda-cpp-$ver
