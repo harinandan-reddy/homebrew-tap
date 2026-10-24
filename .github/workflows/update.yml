@@ -49,6 +49,7 @@ jobs:
           - { name: launchyard, repo: jayhickey/Launchyard }
           - { name: multica-desktop, repo: multica-ai/multica }
           - { name: colibri, repo: JustVugg/colibri }
+          - { name: kanban-code, repo: langwatch/kanban-code }
     steps:
       - uses: actions/checkout@v4
       - name: Bump formula
