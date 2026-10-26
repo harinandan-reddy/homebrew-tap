@@ -50,6 +50,7 @@ jobs:
           - { name: multica-desktop, repo: multica-ai/multica }
           - { name: colibri, repo: JustVugg/colibri }
           - { name: kanban-code, repo: langwatch/kanban-code }
+          - { name: paisa, repo: ananthakumaran/paisa }
     steps:
       - uses: actions/checkout@v4
       - name: Bump formula

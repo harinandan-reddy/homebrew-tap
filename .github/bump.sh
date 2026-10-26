@@ -12,9 +12,9 @@ if [ -f "Casks/$1.rb" ]; then
   old=$(sed -nE 's/^  version "(.*)"/\1/p' "$f")
   [ "$old" = "$ver" ] && exit 0
   if grep -q '^  sha256 arm:' "$f"; then
-    # Two-arch cask: digests of the mac-arm64 / mac-x64 zips.
-    dg() { gh release view "$tag" --repo "$repo" --json assets --jq ".assets[] | select(.name | test(\"mac-$1\\\\.zip$\")) | .digest | sub(\"sha256:\";\"\")"; }
-    sed -i.bak -E "s/^  version \".*\"/  version \"$ver\"/; s/^(  sha256 arm: +)\".*\"/\1\"$(dg arm64)\"/; s/^( +intel: +)\".*\"/\1\"$(dg x64)\"/" "$f"
+    # Two-arch cask: digests of the mac-arm64 / mac-x64 (or macos-amd64) zips/dmgs.
+    dg() { gh release view "$tag" --repo "$repo" --json assets --jq ".assets[] | select(.name | test(\"mac(os)?-$1\\\\.(zip|dmg)$\")) | .digest | sub(\"sha256:\";\"\")"; }
+    sed -i.bak -E "s/^  version \".*\"/  version \"$ver\"/; s/^(  sha256 arm: +)\".*\"/\1\"$(dg arm64)\"/; s/^( +intel: +)\".*\"/\1\"$(dg "(x64|amd64)")\"/" "$f"
     rm -f "$f.bak"
     echo "$ver"
     exit 0
