@@ -1,0 +1,14 @@
+name: readme-check
+on: [pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          rc=0
+          for f in Casks/*.rb Formula/*.rb; do
+            n=$(basename "$f" .rb); n=${n%%@*}
+            grep -qE "tap/$n([^a-zA-Z0-9@-]|$)" README.md || { echo "README missing: $n"; rc=1; }
+          done
+          exit $rc

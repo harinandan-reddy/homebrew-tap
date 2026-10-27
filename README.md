@@ -77,3 +77,33 @@ A formula for [colibri](https://github.com/JustVugg/colibri), a small C engine t
     brew install harinandan-reddy/tap/colibri
 
 The same GitHub Actions workflow checks for new releases and bumps the formula version and checksums automatically.
+
+## Kanban Code
+
+A cask for [Kanban Code](https://github.com/langwatch/kanban-code), a macOS app with a kanban board for running several Claude Code agents in parallel. It needs macOS 26 (Tahoe) and installs Homebrew's `node` for you. It also puts a `kanban` command on your PATH. Claude Code must be installed separately. The app is not notarized, so the cask prints the command to clear the quarantine flag if macOS blocks it.
+
+    brew install --cask harinandan-reddy/tap/kanban-code
+
+The same GitHub Actions workflow bumps the cask version and checksum automatically.
+
+## Multica
+
+A cask for [Multica](https://github.com/multica-ai/multica), a desktop app for managing AI agents as teammates. It needs macOS 12 (Monterey) or newer and supports Apple Silicon and Intel.
+
+    brew install --cask harinandan-reddy/tap/multica-desktop
+
+The same GitHub Actions workflow bumps the cask version and checksums automatically.
+
+## Paisa
+
+A cask for [Paisa](https://paisa.fyi/), a personal finance manager. It supports macOS on Apple Silicon and Intel.
+
+    brew install --cask harinandan-reddy/tap/paisa
+
+The same GitHub Actions workflow bumps the cask version and checksums automatically.
+
+## Red Panda C++
+
+A cask for [Red Panda C++](https://github.com/royqh1979/RedPanda-CPP), a cross-platform C++ IDE. It needs macOS 14 (Sonoma) or newer. Upstream does not ship a macOS build, so a workflow in this tap builds the app from source and publishes it as a release on this repository, and the cask installs that build. The app is ad-hoc signed and not notarized, so the cask prints the command to clear the quarantine flag if macOS blocks it. You also need a C++ compiler, for example from `xcode-select --install`.
+
+    brew install --cask harinandan-reddy/tap/redpanda-cpp
