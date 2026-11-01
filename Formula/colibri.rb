@@ -11,8 +11,8 @@ class Colibri < Formula
     depends_on arch: :arm64
 
     on_arm do
-      url "https://github.com/JustVugg/colibri/releases/download/v2.0.0/colibri-v2.0.0-macos-arm64.tar.gz"
-      sha256 "faa0841b20b7efe3b3bbd537360a42bb8beeaa5031bfff3813ecb01367edf851"
+      url "https://github.com/JustVugg/colibri/releases/download/v2.1.0/colibri-v2.1.0-macos-arm64.tar.gz"
+      sha256 "58320c9d92f84873820ced439c5dfe30afec64ebfc5ae7255ed8f34414d9e202"
     end
   end
 
@@ -21,8 +21,8 @@ class Colibri < Formula
     depends_on arch: :x86_64
 
     on_intel do
-      url "https://github.com/JustVugg/colibri/releases/download/v2.0.0/colibri-v2.0.0-linux-x86_64.tar.gz"
-      sha256 "aef2c1e7d5cbad3d27cc90d8432775acdc315ec51f6d7a67a2f13a936f9978ce"
+      url "https://github.com/JustVugg/colibri/releases/download/v2.1.0/colibri-v2.1.0-linux-x86_64.tar.gz"
+      sha256 "d54b4c57c12417fc9e784b649249ac1aa3480eec44ece2777d4cbc639a25e66a"
     end
   end
 
