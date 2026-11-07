@@ -51,6 +51,7 @@ jobs:
           - { name: colibri, repo: JustVugg/colibri }
           - { name: kanban-code, repo: langwatch/kanban-code }
           - { name: paisa, repo: ananthakumaran/paisa }
+          - { name: marktext, repo: marktext/marktext }
     steps:
       - uses: actions/checkout@v4
       - name: Bump formula

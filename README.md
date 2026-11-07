@@ -90,6 +90,14 @@ A cask for [Launchyard](https://github.com/jayhickey/Launchyard), a native macOS
 
 The same GitHub Actions workflow bumps the cask version and checksum automatically. The checksum comes from the digest GitHub shows for the release asset.
 
+### MarkText
+
+A cask for [MarkText](https://github.com/marktext/marktext), a Markdown editor. It needs macOS 12 (Monterey) or newer and supports Apple Silicon and Intel. The app is not notarized, so the cask prints the command to clear the quarantine flag if macOS blocks it.
+
+    brew install --cask harinandan-reddy/tap/marktext
+
+The same GitHub Actions workflow bumps the cask version and checksums automatically. Only stable releases are tracked, so release candidates are skipped.
+
 ### Multica
 
 A cask for [Multica](https://github.com/multica-ai/multica), a desktop app for managing AI agents as teammates. It needs macOS 12 (Monterey) or newer and supports Apple Silicon and Intel.
