@@ -1,8 +1,8 @@
 class ScipJava < Formula
   desc "SCIP code intelligence indexer for Java, Scala and Kotlin"
   homepage "https://github.com/scip-code/scip-java"
-  url "https://github.com/scip-code/scip-java/releases/download/v0.13.2/scip-java-v0.13.2"
-  sha256 "5248136592d19ea2c468f64ebd18587d32de7c961536ff19346f8a025af1d13c"
+  url "https://github.com/scip-code/scip-java/releases/download/v0.14.1/scip-java-v0.14.1"
+  sha256 "06be799e2d9914e142ede285bb21c0f077e9ea84b6a835c90893c2fb048eeb53"
   license "Apache-2.0"
 
   depends_on "openjdk"
