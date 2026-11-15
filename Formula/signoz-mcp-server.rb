@@ -1,26 +1,26 @@
 class SignozMcpServer < Formula
   desc "MCP Server for SigNoz"
   homepage "https://github.com/SigNoz/signoz-mcp-server"
-  version "0.18.0"
+  version "0.19.0"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/SigNoz/signoz-mcp-server/releases/download/v#{version}/signoz-mcp-server_darwin_arm64.tar.gz"
-      sha256 "e772fc2cab8f3518965b14f5f590e025fbaf09b471dab2333a60faa55c13ea32"
+      sha256 "c79a451f4a467122092e5030ba5ec1a40c2f4acada4217058e5ba78dac338fcf"
     else
       url "https://github.com/SigNoz/signoz-mcp-server/releases/download/v#{version}/signoz-mcp-server_darwin_amd64.tar.gz"
-      sha256 "8776c787a2d72a2d38f3740ebee5ccf17343e8447d1cb41f24a7b06734fa429c"
+      sha256 "07702844e325da4146d26b964ef36c8a9d66d8aeb14c2ffd50d96b6458decbf4"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
       url "https://github.com/SigNoz/signoz-mcp-server/releases/download/v#{version}/signoz-mcp-server_linux_arm64.tar.gz"
-      sha256 "abeac58cb56e09ac394edc6be5213fab4568681bb82676bbf983b29410eb3c9e"
+      sha256 "46dda47e4e732ca8dca5566e5b7f0c52367eb18cf0453f8fa7bf63f34fe8e67b"
     else
       url "https://github.com/SigNoz/signoz-mcp-server/releases/download/v#{version}/signoz-mcp-server_linux_amd64.tar.gz"
-      sha256 "382a98b2d269741b4dd3730bd231834f274f29410fc8a6e84934a6c97c3453fd"
+      sha256 "f668782e38a2ffb297ad6d2dfa5e1251dc03225b06ca0488a1d30abc36bb891d"
     end
   end
 
