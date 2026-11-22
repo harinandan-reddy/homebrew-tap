@@ -1,9 +1,9 @@
 cask "paisa" do
   arch arm: "arm64", intel: "amd64"
 
-  version "0.7.8"
-  sha256 arm:   "71c3d1bab4b8422d318b3492ecbf3cf92750196a3edec19982e16f84b8795a7c",
-         intel: "bf37c9c33a9aff2573bf77c2d0a9f1dc1d126a44fa461a21995fab5dfbf492a6"
+  version "0.8.0"
+  sha256 arm:   "558896960a547ba82eea344f81f5a93156ac31f6fb693999576241482a5d9aeb",
+         intel: "944d313d8f2442c2e5eb42114f0a86c7364a2884f71615b98497ed4f52109d93"
 
   url "https://github.com/ananthakumaran/paisa/releases/download/v#{version}/paisa-app-macos-#{arch}.dmg"
   name "Paisa"
