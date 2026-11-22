@@ -5,23 +5,23 @@ class Codegraph < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/colbymchenry/codegraph/releases/download/v1.6.2/codegraph-darwin-arm64.tar.gz"
-      sha256 "d74d1bfb4060db63ec3c2b72c4e17f76c31978af3bad6ace4370d1501ac0662e"
+      url "https://github.com/colbymchenry/codegraph/releases/download/v1.6.4/codegraph-darwin-arm64.tar.gz"
+      sha256 "daa9142732eefed5b6d187aa82a2ca9c4f3ebce10d394fb79cf6c45b367618cc"
     end
     on_intel do
-      url "https://github.com/colbymchenry/codegraph/releases/download/v1.6.2/codegraph-darwin-x64.tar.gz"
-      sha256 "53d1a4d1a9af31d6cec11b346df2ae792087081e13f623f583e27783c1e7f9bc"
+      url "https://github.com/colbymchenry/codegraph/releases/download/v1.6.4/codegraph-darwin-x64.tar.gz"
+      sha256 "f16a56e5df375a1652ed717ce8bd0fb466725e64b52a53dc0070d6e8c281363c"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/colbymchenry/codegraph/releases/download/v1.6.2/codegraph-linux-arm64.tar.gz"
-      sha256 "c8c6be292be21d00dea26bad8b28d434731cf612fb8cc475dc10f5b3038b5b64"
+      url "https://github.com/colbymchenry/codegraph/releases/download/v1.6.4/codegraph-linux-arm64.tar.gz"
+      sha256 "e9cd2bebb29ce6aa83b4489755f76a36f3e22658beac5ebef023b874be7cfce1"
     end
     on_intel do
-      url "https://github.com/colbymchenry/codegraph/releases/download/v1.6.2/codegraph-linux-x64.tar.gz"
-      sha256 "ef0af416092128fb1ccc723786000b7edf4a6971fe604acd08bf966e4f37b828"
+      url "https://github.com/colbymchenry/codegraph/releases/download/v1.6.4/codegraph-linux-x64.tar.gz"
+      sha256 "8477f3841cba6ac8c45847d42eb5254f1f2d7fbc3045baf333e1cbe92267022d"
     end
   end
 
